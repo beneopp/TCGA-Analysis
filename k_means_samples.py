@@ -124,3 +124,29 @@ for i in range(0, 10):
     trials[objective] = cluster_assignments
 
 cluster_assignments = trials[min(trials.keys())]
+
+print("plotting data...")
+sorted_correlations = cluster_data(num_of_clusters)
+plt.imshow(sorted_correlations, cmap="plasma")
+cbar = plt.colorbar()
+cbar.set_label("Pearson Correlation Coefficient")
+plt.title("Heatmap After Clustering")
+plt.savefig("output/heatmap_after_cluster_samples.png")
+
+
+objectives = []
+for i in range(3, 50):
+    print()
+    print("cluster mean", i)
+    print()
+    objectives.append(k_means(i))
+
+
+print("plotting results...")
+y = objectives
+x = range(3, 3 + len(objectives))
+plt.plot(x, y)
+plt.title("Objectives for Different K Values for Samples")
+plt.ylabel("Objective Value")
+plt.xlabel("K Value")
+plt.savefig("k_means_samples_2.png", bbox_inches='tight')
