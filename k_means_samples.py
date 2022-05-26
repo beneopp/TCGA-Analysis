@@ -2,15 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats
 
-"""
-def upload_data():
-    with open("compact_data/matrix.txt") as f:
-        matrix = np.array([sample.strip().split() for sample in f.readlines()]).astype(float)
-
-    matrix = matrix[:, np.median(matrix, axis=0) > 0]
-    return matrix
-"""
-
 def assign_random_cluster(num_of_features):
     cluster = np.random.rand(num_of_features)
     range_of_data = scipy.stats.iqr(matrix, axis=0)
@@ -90,21 +81,6 @@ def k_means(num_of_clusters):
     return objective, cluster_assignments
 
 
-"""
-def cluster_data():
-    new_matrix = np.zeros(matrix.shape)
-    i = 0
-    for j in range(num_of_clusters):
-        samples_in_cluster = matrix[cluster_assignments == j]
-        if len(samples_in_cluster) == 0:
-            continue
-        new_matrix[i: i + len(samples_in_cluster)] = samples_in_cluster
-        i += len(samples_in_cluster)
-    return new_matrix
-
-"""
-
-
 def cluster_data(number_of_clusters):
     reorder_indexes = get_reorder_indexes(number_of_clusters)
     new_matrix = correlations[reorder_indexes]
@@ -148,32 +124,3 @@ for i in range(0, 10):
     trials[objective] = cluster_assignments
 
 cluster_assignments = trials[min(trials.keys())]
-
-"""
-
-print("plotting data...")
-sorted_correlations = cluster_data(num_of_clusters)
-plt.imshow(sorted_correlations, cmap="plasma")
-cbar = plt.colorbar()
-cbar.set_label("Pearson Correlation Coefficient")
-plt.title("Heatmap After Clustering")
-plt.savefig("output/heatmap_after_cluster_samples.png")
-
-
-objectives = []
-for i in range(3, 50):
-    print()
-    print("cluster mean", i)
-    print()
-    objectives.append(k_means(i))
-
-
-print("plotting results...")
-y = objectives
-x = range(3, 3 + len(objectives))
-plt.plot(x, y)
-plt.title("Objectives for Different K Values for Samples")
-plt.ylabel("Objective Value")
-plt.xlabel("K Value")
-plt.savefig("k_means_samples_2.png", bbox_inches='tight')
-"""
